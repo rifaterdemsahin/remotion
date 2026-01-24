@@ -2,6 +2,22 @@
 
 This file contains important workflow steps that need to be done manually.
 
+---
+
+## 📁 Project Structure
+
+| Folder | Purpose |
+|--------|---------|
+| `1_Real_Unknown` | Objectives (OKRs) - Defines project objectives and key results, starts with the unknown problem |
+| `2_Environment` | Roadmap and Use Cases - Contains the project roadmap with development phases and detailed use cases |
+| `3_Simulation` | UI - User interfaces and technologies used, including HTML5, CSS3, JavaScript |
+| `4_Formula` | Guides and Best Practices - Provides guidelines built by GPT |
+| `5_Symbols` | Core Source Code - Contains the main Remotion application files |
+| `6_Semblance` | Error Logs and Solutions - Documents common issues, causes, and solutions |
+| `7_Testing_known` | Validation - Contains test plans and acceptance criteria to reach objectives |
+
+---
+
 ## 📹 New Video Rendered?
 
 When you render a new video to `3_Simulation/`, you must **manually update** the video gallery:
