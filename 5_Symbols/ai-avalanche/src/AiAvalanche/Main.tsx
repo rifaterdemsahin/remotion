@@ -39,8 +39,7 @@ const ShakeText: React.FC<{
   return (
     <div
       style={{
-        position: "absolute",
-        width: "100%",
+        position: "relative",
         textAlign: "center",
         fontSize,
         fontWeight: 900,
@@ -86,8 +85,7 @@ const SlamText: React.FC<{
   return (
     <div
       style={{
-        position: "absolute",
-        width: "100%",
+        position: "relative",
         textAlign: "center",
         fontSize,
         fontWeight: 900,
@@ -112,16 +110,16 @@ const SlamText: React.FC<{
 const SnowParticles: React.FC<{ blowAway?: boolean }> = ({ blowAway = false }) => {
   const frame = useCurrentFrame();
   const particles = new Array(80).fill(0).map((_, i) => {
-    const baseX = random(i) * 1080;
-    const baseY = random(i + 100) * 1920;
+    const baseX = random(i) * 1920;
+    const baseY = random(i + 100) * 1080;
     
     // Blow away effect - particles move right and fade
     const blowOffset = blowAway ? frame * (20 + random(i) * 30) : 0;
     const blowOpacity = blowAway ? interpolate(frame, [0, 60], [0.9, 0], { extrapolateRight: "clamp" }) : 0.8;
     
     return {
-      x: (baseX + blowOffset) % 1200,
-      y: (baseY + frame * (5 + random(i) * 10)) % 2000 - 100,
+      x: (baseX + blowOffset) % 2100,
+      y: (baseY + frame * (5 + random(i) * 10)) % 1200 - 100,
       size: random(i + 200) * 8 + 3,
       opacity: blowOpacity,
     };
@@ -165,11 +163,11 @@ const GroundCrack: React.FC<{ delay: number }> = ({ delay }) => {
 
   return (
     <AbsoluteFill style={{ transform: `translateX(${shakeX}px)` }}>
-      <svg viewBox="0 0 1080 1920" style={{ position: "absolute", width: "100%", height: "100%" }}>
+      <svg viewBox="0 0 1920 1080" style={{ position: "absolute", width: "100%", height: "100%" }}>
         {/* Main crack lines */}
         <g style={{ opacity: crackProgress }}>
           <path
-            d={`M540,1920 L${540 + crackProgress * 50},1600 L${540 - crackProgress * 30},1400 L${540 + crackProgress * 60},1100 L${540 - crackProgress * 40},800 L540,500`}
+            d={`M960,1080 L${960 + crackProgress * 50},850 L${960 - crackProgress * 30},700 L${960 + crackProgress * 60},500 L${960 - crackProgress * 40},300 L960,100`}
             stroke="#1a1a1a"
             strokeWidth={8 * crackProgress}
             fill="none"
@@ -177,19 +175,19 @@ const GroundCrack: React.FC<{ delay: number }> = ({ delay }) => {
           />
           {/* Secondary cracks */}
           <path
-            d={`M${540 + crackProgress * 50},1600 L${640 + crackProgress * 40},1500`}
+            d={`M${960 + crackProgress * 50},850 L${1100 + crackProgress * 40},750`}
             stroke="#2a2a2a"
             strokeWidth={4 * crackProgress}
             fill="none"
           />
           <path
-            d={`M${540 - crackProgress * 30},1400 L${440 - crackProgress * 50},1300`}
+            d={`M${960 - crackProgress * 30},700 L${800 - crackProgress * 50},600`}
             stroke="#2a2a2a"
             strokeWidth={4 * crackProgress}
             fill="none"
           />
           <path
-            d={`M${540 + crackProgress * 60},1100 L${680 + crackProgress * 30},1000`}
+            d={`M${960 + crackProgress * 60},500 L${1150 + crackProgress * 30},400`}
             stroke="#2a2a2a"
             strokeWidth={3 * crackProgress}
             fill="none"
@@ -199,19 +197,19 @@ const GroundCrack: React.FC<{ delay: number }> = ({ delay }) => {
         {/* Ground pieces separating */}
         <rect
           x={0}
-          y={1700}
-          width={540}
-          height={220}
+          y={950}
+          width={960}
+          height={130}
           fill="#3d3d3d"
-          transform={`translate(${-crackProgress * 20}, ${crackProgress * 10}) rotate(${-crackProgress * 2}, 270, 1810)`}
+          transform={`translate(${-crackProgress * 20}, ${crackProgress * 10}) rotate(${-crackProgress * 2}, 480, 1015)`}
         />
         <rect
-          x={540}
-          y={1700}
-          width={540}
-          height={220}
+          x={960}
+          y={950}
+          width={960}
+          height={130}
           fill="#4a4a4a"
-          transform={`translate(${crackProgress * 20}, ${crackProgress * 15}) rotate(${crackProgress * 2}, 810, 1810)`}
+          transform={`translate(${crackProgress * 20}, ${crackProgress * 15}) rotate(${crackProgress * 2}, 1440, 1015)`}
         />
       </svg>
     </AbsoluteFill>
@@ -276,7 +274,10 @@ export const AiAvalancheMain: React.FC<z.infer<typeof avalancheSchema>> = () => 
             display: "flex", 
             flexDirection: "column", 
             alignItems: "center",
-            gap: 40,
+            justifyContent: "center",
+            position: "relative",
+            width: "100%",
+            height: "auto",
           }}>
             <ShakeText 
               text="THIS IS AN" 
@@ -285,7 +286,7 @@ export const AiAvalancheMain: React.FC<z.infer<typeof avalancheSchema>> = () => 
               fontSize={90}
               intensity={12}
             />
-            <div style={{ marginTop: 120 }}>
+            <div style={{ marginTop: 80 }}>
               <ShakeText 
                 text="AI AVALANCHE" 
                 delay={8} 
@@ -391,6 +392,8 @@ export const AiAvalancheMain: React.FC<z.infer<typeof avalancheSchema>> = () => 
             backgroundColor: "#000000",
             justifyContent: "center", 
             alignItems: "center",
+            display: "flex",
+            flexDirection: "column",
           }}
         >
           {/* Dramatic red vignette */}
@@ -401,29 +404,35 @@ export const AiAvalancheMain: React.FC<z.infer<typeof avalancheSchema>> = () => 
             background: "radial-gradient(ellipse at center, transparent 30%, rgba(139, 0, 0, 0.4) 100%)",
           }} />
           
-          <SlamText 
-            text="NOBODY'S JOB" 
-            delay={0} 
-            color="#e74c3c" 
-            fontSize={100}
-          />
-          <div style={{ marginTop: 220 }}>
+          <div style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+          }}>
             <SlamText 
-              text="IS SECURE" 
-              delay={12} 
-              color="#ffffff" 
-              fontSize={150}
+              text="NOBODY'S JOB" 
+              delay={0} 
+              color="#e74c3c" 
+              fontSize={100}
             />
+            <div style={{ marginTop: 40 }}>
+              <SlamText 
+                text="IS SECURE" 
+                delay={12} 
+                color="#ffffff" 
+                fontSize={150}
+              />
+            </div>
           </div>
           
           {/* Period/dot for emphasis */}
           <Sequence from={25}>
             <div style={{
-              position: "absolute",
-              bottom: 350,
               fontSize: 200,
               color: "#e74c3c",
               fontWeight: 900,
+              marginTop: 20,
             }}>
               .
             </div>
