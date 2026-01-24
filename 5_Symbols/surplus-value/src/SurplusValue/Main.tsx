@@ -5,7 +5,9 @@ import {
   interpolate, 
   spring, 
   useVideoConfig,
-  Sequence 
+  Sequence,
+  Audio,
+  staticFile 
 } from "remotion";
 import { z } from "zod";
 
@@ -68,6 +70,14 @@ const SurplusNode: React.FC<{
 
   return (
     <>
+        {/* Audio Effects */}
+        <Sequence from={delayStart}>
+            <Audio src={staticFile("sounds/whoosh.mp3")} volume={0.5} />
+        </Sequence>
+        <Sequence from={surplusDelay}>
+             <Audio src={staticFile("sounds/pop.mp3")} volume={0.8} />
+        </Sequence>
+
         {/* Connection Line to next node (if not last, or loop back) */}
         <Arrow 
             startX={x} 
