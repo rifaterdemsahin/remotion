@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Remotion Video Gallery</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f0f2f5;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      h1 {
+        color: #2c3e50;
+        margin-bottom: 30px;
+      }
+
+      .container {
+        display: flex;
+        gap: 20px;
+        max-width: 1200px;
+        width: 100%;
+      }
+
+      .sidebar {
+        flex: 1;
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .video-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .video-item {
+        padding: 15px;
+        margin-bottom: 10px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        border-left: 4px solid transparent;
+      }
+
+      .video-item:hover {
+        background-color: #e9ecef;
+        transform: translateX(5px);
+      }
+
+      .video-item.active {
+        background-color: #e3f2fd;
+        border-left-color: #2196f3;
+        color: #1976d2;
+        font-weight: bold;
+      }
+
+      .main-content {
+        flex: 3;
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .video-player-container {
+        width: 100%;
+        aspect-ratio: 16/9;
+        background: #000;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        position: relative;
+      }
+
+      video {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+
+      .placeholder {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        text-align: center;
+      }
+
+      .video-info {
+        margin-top: 20px;
+        text-align: left;
+        width: 100%;
+      }
+
+      .status-badge {
+        display: inline-block;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: bold;
+        text-transform: uppercase;
+      }
+
+      .status-found {
+        background-color: #d4edda;
+        color: #155724;
+      }
+
+      .status-missing {
+        background-color: #f8d7da;
+        color: #721c24;
+      }
+
+      .copy-btn {
+          background-color: #f0f0f0;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          padding: 5px 10px;
+          cursor: pointer;
+          margin-left: 10px;
+          font-size: 12px;
+          transition: background-color 0.2s;
+      }
+
+      .copy-btn:hover {
+          background-color: #e0e0e0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>🎬 Remotion Project Gallery</h1>
+
+    <div class="container">
+      <aside class="sidebar">
+        <h3>Select a Video</h3>
+        <ul class="video-list" id="videoList">
+          <!-- List items will be populated by JS -->
+        </ul>
+      </aside>
+
+      <main class="main-content">
+        <div class="video-player-container">
+          <video id="mainVideo" controls>
+            <source src="" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+          <div id="placeholder" class="placeholder" style="display: none">
+            <h2>Video Not Found</h2>
+            <p>
+              Please render this video using:<br /><code
+                >npx remotion render</code
+              >
+            </p>
+          </div>
+        </div>
+
+        <div class="video-info">
+          <h2 id="videoTitle">Select a video to start</h2>
+          <div id="videoDescription">description...</div>
+          <div style="margin-top: 10px; display: flex; align-items: center;">
+            <span>Path: <code id="videoPath">...</code></span>
+            <button id="copyBtn" class="copy-btn" onclick="copyLink()">📋 Copy Link</button>
+            <span id="videoStatus" class="status-badge" style="margin-left: 10px;"></span>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      // Configuration of available videos
+      // Paths are relative to this HTML file in 3_Simulation/
+        const videos = [
+            {
+                id: 'hello-world',
+                title: 'Hello World',
+                description: 'The simulation starter template (Please Render)',
+                path: '../5_Symbols/hello-world/out/HelloWorld.mp4'
+            },
+            {
+                id: 'surplus-value',
+                title: 'Surplus Value Cycle',
+                description: 'Animation showing the extraction of surplus value in a capitalist system.',
+                path: '../5_Symbols/surplus-value/out/SurplusValue4.mp4'
+            },
+            {
+                id: 'bayesian',
+                title: 'Bayesian Logic',
+                description: 'Visualizing beliefs updating with new evidence.',
+                path: '../5_Symbols/bayesian-logic/out/BayesianLogic.mp4'
+            },
+            {
+                id: 'ai-transform',
+                title: 'AI Transformation',
+                description: 'The 3-stage journey: Assessment, Simulation, Certification.',
+                path: '../5_Symbols/ai-transformation/out/AiTransformation4.mp4'
+            },
+            {
+                id: 'sim-journey',
+                title: 'Simulation Journey',
+                description: 'A detailed walkthrough of the upskilling process.',
+                path: '../5_Symbols/simulation-journey/out/AiTransformation4.mp4' 
+                // Note: It seems Simulation Journey might have been rendered with a copied default name 'AiTransformation4.mp4'
+                // based on earlier logs. Please verify or re-render.
+            }
+        ];
+
+      const videoList = document.getElementById("videoList");
+      const mainVideo = document.getElementById("mainVideo");
+      const videoTitle = document.getElementById("videoTitle");
+      const videoDesc = document.getElementById("videoDescription");
+      const videoPath = document.getElementById("videoPath");
+      const videoStatus = document.getElementById("videoStatus");
+      const placeholder = document.getElementById("placeholder");
+
+      // Function to check if file exists (simple HEAD request)
+      async function checkFileExists(url) {
+        try {
+          const response = await fetch(url, { method: "HEAD" });
+          return response.ok;
+        } catch (e) {
+          return false;
+        }
+      }
+
+      async function loadVideo(video) {
+        // Update UI text
+        videoTitle.textContent = video.title;
+        videoDesc.textContent = video.description;
+        videoPath.textContent = video.path;
+
+        // Highlight list item
+        document
+          .querySelectorAll(".video-item")
+          .forEach((el) => el.classList.remove("active"));
+        document.getElementById(`item-${video.id}`).classList.add("active");
+
+        // Check if file plays (we can't easily check file existence from file:// protocol without fetch failing,
+        // but we can rely on video error events or just try to load it).
+        // For a static local file, we just try to set the src.
+
+        mainVideo.style.display = "block";
+        placeholder.style.display = "none";
+
+        mainVideo.src = video.path;
+
+        // Attempt to play
+        try {
+          // We add an error listener once to detect loading failures
+          mainVideo.onerror = () => {
+            showError();
+          };
+
+          await mainVideo.play();
+          videoStatus.textContent = "Available";
+          videoStatus.className = "status-badge status-found";
+        } catch (e) {
+          // If standard play fails (e.g. strict autoplay policy), it might still be valid but just paused.
+          // The 'error' event is more reliable for missing files.
+          console.log("Autoplay prevented or load error", e);
+        }
+      }
+
+      function showError() {
+        mainVideo.style.display = "none";
+        placeholder.style.display = "flex";
+        videoStatus.textContent = "Missing / Not Rendered";
+        videoStatus.className = "status-badge status-missing";
+      }
+
+      // Init List
+      videos.forEach((video) => {
+        const li = document.createElement("li");
+        li.className = "video-item";
+        li.id = `item-${video.id}`;
+        li.innerHTML = `
+                <div style="font-weight:bold;">${video.title}</div>
+                <div style="font-size:12px; color:#666;">${video.description}</div>
+            `;
+        li.onclick = () => loadVideo(video);
+        videoList.appendChild(li);
+      });
+
+      // Load first item automatically
+      if (videos.length > 0) {
+        loadVideo(videos[4]); // Load the latest one by default (Simulation Journey)
+      }
+
+      function copyLink() {
+          const pathText = document.getElementById('videoPath').innerText;
+          // Create a temporary input to copy from
+          const tempInput = document.createElement("input");
+          tempInput.value = pathText;
+          document.body.appendChild(tempInput);
+          tempInput.select();
+          document.execCommand("copy");
+          document.body.removeChild(tempInput);
+          
+          const btn = document.getElementById('copyBtn');
+          const originalText = btn.innerHTML;
+          btn.innerHTML = "✅ Copied!";
+          setTimeout(() => {
+              btn.innerHTML = originalText;
+          }, 2000);
+      }
+    </script>
+  </body>
+</html>
