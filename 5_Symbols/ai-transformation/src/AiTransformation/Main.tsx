@@ -17,13 +17,14 @@ export const aiTransformSchema = z.object({
 
 const Stage: React.FC<{
   index: number;
-  emoji: string;
+  emoji?: string;
+  image?: string;
   title: string;
   subtitle: string;
   color: string;
   delay: number;
   details?: { emoji: string; text: string }[];
-}> = ({ index, emoji, title, subtitle, color, delay, details }) => {
+}> = ({ index, emoji, image, title, subtitle, color, delay, details }) => {
     const frame = useCurrentFrame();
     const { fps } = useVideoConfig();
 
@@ -60,9 +61,14 @@ const Stage: React.FC<{
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                flexShrink: 0
+                flexShrink: 0,
+                overflow: "hidden"
             }}>
-                {emoji}
+                {image ? (
+                     <img src={image} style={{ width: "80%", height: "80%", objectFit: "contain" }} alt="" />
+                ) : (
+                    emoji
+                )}
             </div>
             <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", width: "100%" }}>
                 <div style={{ fontSize: 50, fontWeight: "bold", color: "#333" }}>
@@ -120,7 +126,7 @@ export const AiTransformMain: React.FC<z.infer<typeof aiTransformSchema>> = ({
                 <Audio src={staticFile("sounds/whoosh.mp3")} volume={0.5} />
                 <Stage 
                     index={1}
-                    emoji="📊"
+                    image={staticFile("images/assessment_form.png")}
                     title="Assessments"
                     subtitle="Thorough assessments to identify professionals' current capabilities and areas for development."
                     color="#e1f5fe"
@@ -132,7 +138,7 @@ export const AiTransformMain: React.FC<z.infer<typeof aiTransformSchema>> = ({
                 <Audio src={staticFile("sounds/whoosh.mp3")} volume={0.5} /> 
                 <Stage 
                     index={2}
-                    emoji="🎓"
+                    image={staticFile("images/simulation_video.png")}
                     title="Simulations"
                     subtitle="Collaborative simulation workshops where participants work together to build AI agent solutions."
                     color="#fff3e0"
@@ -144,7 +150,7 @@ export const AiTransformMain: React.FC<z.infer<typeof aiTransformSchema>> = ({
                 <Audio src={staticFile("sounds/whoosh.mp3")} volume={0.5} />
                 <Stage 
                     index={3}
-                    emoji="🏆"
+                    image={staticFile("images/certification_badges.png")}
                     title="Certification"
                     subtitle="Certifies professionals as qualified pilots with specific focus on technical implementation expertise."
                     color="#e8f5e9"
