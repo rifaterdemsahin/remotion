@@ -41,16 +41,17 @@ const Stage: React.FC<{
         <div style={{
             display: "flex",
             flexDirection: "row",
-            alignItems: "center",
+            alignItems: "flex-start", // changed from center to flex-start for layout
             marginBottom: 40,
             opacity,
             transform: `translateY(${translateY}px) scale(${progress})`,
             backgroundColor: "white",
-            padding: "25px 40px",
+            padding: "30px 40px",
             borderRadius: 30,
             boxShadow: "0 10px 30px rgba(0,0,0,0.1)",
             width: "90%"
         }}>
+            {/* Left: Emoji Circle */}
             <div style={{
                 fontSize: 80,
                 marginRight: 40,
@@ -61,15 +62,12 @@ const Stage: React.FC<{
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                flexShrink: 0,
-                overflow: "hidden"
+                flexShrink: 0
             }}>
-                {image ? (
-                     <img src={image} style={{ width: "80%", height: "80%", objectFit: "contain" }} alt="" />
-                ) : (
-                    emoji
-                )}
+                {emoji}
             </div>
+            
+            {/* Right: Content Column */}
             <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", width: "100%" }}>
                 <div style={{ fontSize: 50, fontWeight: "bold", color: "#333" }}>
                     {index}. {title}
@@ -77,6 +75,29 @@ const Stage: React.FC<{
                 <div style={{ fontSize: 30, color: "#666", marginTop: 8 }}>
                     {subtitle}
                 </div>
+                
+                {/* Image Section - Centered and Large */}
+                {image && (
+                    <div style={{ 
+                        marginTop: 25, 
+                        width: "100%", 
+                        display: "flex", 
+                        justifyContent: "center",
+                        height: 300, // Fixed height container
+                    }}>
+                         <img 
+                            src={image} 
+                            style={{ 
+                                height: "100%", 
+                                maxWidth: "100%", 
+                                objectFit: "contain",
+                                borderRadius: 10
+                            }} 
+                            alt="" 
+                        />
+                    </div>
+                )}
+
                 {details && (
                     <div style={{ display: "flex", flexDirection: "row", marginTop: 20, flexWrap: "wrap" }}>
                         {details.map((item, i) => (
@@ -126,6 +147,7 @@ export const AiTransformMain: React.FC<z.infer<typeof aiTransformSchema>> = ({
                 <Audio src={staticFile("sounds/whoosh.mp3")} volume={0.5} />
                 <Stage 
                     index={1}
+                    emoji="📊"
                     image={staticFile("images/assessment_form.png")}
                     title="Assessments"
                     subtitle="Thorough assessments to identify professionals' current capabilities and areas for development."
@@ -138,6 +160,7 @@ export const AiTransformMain: React.FC<z.infer<typeof aiTransformSchema>> = ({
                 <Audio src={staticFile("sounds/whoosh.mp3")} volume={0.5} /> 
                 <Stage 
                     index={2}
+                    emoji="🎓"
                     image={staticFile("images/simulation_video.png")}
                     title="Simulations"
                     subtitle="Collaborative simulation workshops where participants work together to build AI agent solutions."
@@ -150,6 +173,7 @@ export const AiTransformMain: React.FC<z.infer<typeof aiTransformSchema>> = ({
                 <Audio src={staticFile("sounds/whoosh.mp3")} volume={0.5} />
                 <Stage 
                     index={3}
+                    emoji="🏆"
                     image={staticFile("images/certification_badges.png")}
                     title="Certification"
                     subtitle="Certifies professionals as qualified pilots with specific focus on technical implementation expertise."
