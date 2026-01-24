@@ -6,7 +6,7 @@ import {
   useVideoConfig,
   Sequence,
 } from "remotion";
-import { Search, Cpu, Medal, CheckCircle } from "lucide-react";
+import { Search, Cpu, Medal } from "lucide-react";
 import { z } from "zod";
 
 export const ascSchema = z.object({
@@ -17,10 +17,9 @@ export const ascSchema = z.object({
 
 const StepsContainer: React.FC = () => {
   const frame = useCurrentFrame();
-  const { fps, width, height } = useVideoConfig();
+  const { width, height } = useVideoConfig();
 
   // Layout calculations
-  const stepHeight = height * 0.2;
   const startY = height * 0.2;
   const gapY = height * 0.25;
 
@@ -119,7 +118,7 @@ const Step: React.FC<{
   delay: number;
 }> = ({ index, icon: Icon, title, subtitle, color, yPos, delay }) => {
   const frame = useCurrentFrame();
-  const { fps, width } = useVideoConfig();
+  const { fps } = useVideoConfig();
 
   const enter = spring({
     frame: frame - delay,
