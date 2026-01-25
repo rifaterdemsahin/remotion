@@ -233,7 +233,7 @@ const Connector: React.FC<{
 
 const EndCard: React.FC = () => {
     const frame = useCurrentFrame();
-    const { fps } = useVideoConfig(); // width was unused
+    const { fps } = useVideoConfig();
     
     const opacity = spring({
         frame,
