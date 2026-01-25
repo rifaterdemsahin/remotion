@@ -3,6 +3,7 @@ import { Composition } from "remotion";
 import { HelloWorld, myCompSchema } from "./HelloWorld";
 import { Logo, myCompSchema2 } from "./HelloWorld/Logo";
 import { AiAvalancheMain, avalancheSchema } from "./AiAvalanche/Main";
+import { DialecticMain, dialecticSchema } from "./AiAvalanche/Dialectic";
 
 // Each <Composition> is an entry in the sidebar!
 
@@ -54,6 +55,19 @@ export const RemotionRoot: React.FC = () => {
         schema={avalancheSchema}
         defaultProps={{
           titleColor: "white",
+        }}
+      />
+      
+      <Composition
+        id="Dialectic"
+        component={DialecticMain}
+        durationInFrames={330}
+        fps={30}
+        width={1920}
+        height={1080}
+        schema={dialecticSchema}
+        defaultProps={{
+          themeColor: "#ffffff",
         }}
       />
     </>
