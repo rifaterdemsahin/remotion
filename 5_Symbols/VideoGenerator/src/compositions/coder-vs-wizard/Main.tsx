@@ -105,7 +105,7 @@ export const CoderVsWizardMain: React.FC<z.infer<typeof coderVsWizardSchema>> = 
               textTransform: 'uppercase',
               textShadow: '0 2px 4px rgba(0,0,0,0.8)'
             }}>
-              BEFORE AGENTS
+              SINGLE SKILLED
             </h2>
             <h1 style={{ 
               fontFamily: 'Courier New, Courier, monospace', 
@@ -117,12 +117,12 @@ export const CoderVsWizardMain: React.FC<z.infer<typeof coderVsWizardSchema>> = 
               textAlign: 'center',
               textShadow: '0 2px 10px rgba(0,0,0,0.8)'
             }}>
-              OLD CODER 👨‍💻
+              I-SKILLED 👨‍💻
             </h1>
             
-            <BulletPoint text="jQuery 📜" delay={START_LEFT} align="left" color="#dddddd" font="Courier New, Courier, monospace"/>
-            <BulletPoint text="Specific Syntax 🧱" delay={START_LEFT + 60} align="left" color="#dddddd" font="Courier New, Courier, monospace"/>
-            <BulletPoint text="C++ 🐢" delay={START_LEFT + 120} align="left" color="#dddddd" font="Courier New, Courier, monospace"/>
+            <BulletPoint text="1 Language (C++) 🐢" delay={START_LEFT} align="left" color="#dddddd" font="Courier New, Courier, monospace"/>
+            <BulletPoint text="Syntax Deep Dive 🧱" delay={START_LEFT + 60} align="left" color="#dddddd" font="Courier New, Courier, monospace"/>
+            <BulletPoint text="Linear Growth 📏" delay={START_LEFT + 120} align="left" color="#dddddd" font="Courier New, Courier, monospace"/>
           </div>
        </div>
 
@@ -172,7 +172,7 @@ export const CoderVsWizardMain: React.FC<z.infer<typeof coderVsWizardSchema>> = 
                 textTransform: 'uppercase',
                 textShadow: '0 0 10px rgba(0,0,0,0.8)',
              }}>
-                AFTER AGENTS
+                Combines Skills
              </h2>
              <h1 style={{ 
                 fontFamily: 'Inter, sans-serif', 
@@ -184,11 +184,11 @@ export const CoderVsWizardMain: React.FC<z.infer<typeof coderVsWizardSchema>> = 
                 fontWeight: 900,
                 textAlign: 'center'
              }}>
-                NEW WIZARD 🧙‍♂️
+                X-SKILLED 🧙‍♂️
              </h1>
-             <BulletPoint text="Testing 🧪" delay={START_RIGHT} align="right" color="#ffffff" font="Inter, sans-serif"/>
-             <BulletPoint text="Operations 🚀" delay={START_RIGHT + 60} align="right" color="#ffffff" font="Inter, sans-serif"/>
-             <BulletPoint text="Creative Solver 🎨" delay={START_RIGHT + 120} align="right" color="#ffffff" font="Inter, sans-serif"/>
+             <BulletPoint text="Code + AI + Ops 🚀" delay={START_RIGHT} align="right" color="#ffffff" font="Inter, sans-serif"/>
+             <BulletPoint text="Fast Prototyping ⚡" delay={START_RIGHT + 60} align="right" color="#ffffff" font="Inter, sans-serif"/>
+             <BulletPoint text="Solution Focused 🎨" delay={START_RIGHT + 120} align="right" color="#ffffff" font="Inter, sans-serif"/>
           </div>
 
           {/* Final Text (Revealed on expansion) */}
