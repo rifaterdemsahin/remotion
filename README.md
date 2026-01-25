@@ -2,7 +2,20 @@
 
 Remotion script
 
->  https://rifaterdemsahin.github.io/remotion/
+> to share
+> <https://rifaterdemsahin.github.io/remotion/>
+> to view
+> <https://localhost:3000>
+
+## Running it
+
+```
+# Goto the video folder
+cd c:\projects\remotion\5_Symbols\map-of-consciousness
+
+# Run it
+npm run dev
+```
 
 ## Project Structure
 
