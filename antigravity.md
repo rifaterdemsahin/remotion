@@ -22,11 +22,12 @@ This file contains important workflow steps that need to be done manually.
 
 When you render a new video to `3_Simulation/`, you must **manually update** the video gallery:
 
-### Steps:
+### Steps
 
 1. **Open** `3_Simulation/index.html`
 
 2. **Add** your video to the `videos` array (around line 195):
+
    ```javascript
    {
        id: 'your-video-id',           // Unique kebab-case identifier
@@ -41,7 +42,7 @@ When you render a new video to `3_Simulation/`, you must **manually update** the
    - Render with suffix: `VideoName2.mp4`, `VideoName3.mp4`, etc.
    - Update the `versions` array: `versions: [1, 2, 3]`
 
-### Example Render Commands:
+### Example Render Commands
 
 ```bash
 # First version
@@ -57,6 +58,7 @@ npx remotion render AiAvalanche ../../3_Simulation/AiAvalanche2.mp4
 ## Why Manual?
 
 The video gallery uses a static HTML file without a build system. Automatic scanning would require:
+
 - A Node.js script to scan the folder
 - Running the script before serving
 - Or converting to a dynamic backend
@@ -64,5 +66,15 @@ The video gallery uses a static HTML file without a build system. Automatic scan
 For simplicity, manual updates are preferred for this project.
 
 ---
+
+## After every video creation
+
+- Move it to the 3_Simulation folder
+- Update the video gallery code
+- Git commit and push
+
+## Why Create with remotion
+
+- Animations to get the cognitive load off from the user
 
 **Last Updated:** 2026-01-24
