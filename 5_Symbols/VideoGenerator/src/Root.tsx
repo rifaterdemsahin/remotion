@@ -12,6 +12,7 @@ import { BayesianMain, bayesSchema } from "./compositions/bayesian-logic/Main";
 import { MapOfConsciousness } from "./compositions/map-of-consciousness/MapOfConsciousness";
 import { SimulationJourneyMain, simulationSchema } from "./compositions/simulation-journey/Main";
 import { SurplusValueMain, surplusValueSchema } from "./compositions/surplus-value/Main";
+import { CoderVsWizardMain, coderVsWizardSchema } from "./compositions/coder-vs-wizard/Main";
 
 // Each <Composition> is an entry in the sidebar!
 
@@ -156,6 +157,18 @@ export const RemotionRoot: React.FC = () => {
         defaultProps={{
           titleColor: "#2c3e50",
         }}
+      />
+
+      {/* Coder vs Wizard */}
+      <Composition
+        id="CoderVsWizard"
+        component={CoderVsWizardMain}
+        durationInFrames={900}
+        fps={30}
+        width={1080}
+        height={1920}
+        schema={coderVsWizardSchema}
+        defaultProps={{}}
       />
     </>
   );
