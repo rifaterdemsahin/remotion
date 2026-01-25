@@ -13,12 +13,14 @@ The `index.html` file serves as a video gallery for all rendered Remotion videos
 **Steps to add a new video:**
 
 1. Render your video from the project folder:
+
    ```bash
    cd 5_Symbols/<project-name>
    npx remotion render <CompositionId> ../../../3_Simulation/<VideoName>.mp4
    ```
 
 2. Open `3_Simulation/index.html` and add an entry to the `videos` array:
+
    ```javascript
    {
        id: 'your-video-id',
@@ -40,3 +42,9 @@ The `index.html` file serves as a video gallery for all rendered Remotion videos
 | BayesianLogic | 1 | `5_Symbols/bayesian-logic` |
 | SimulationJourney | 1 | `5_Symbols/simulation-journey` |
 | SurplusValue | 1, 2, 3, 4 | `5_Symbols/surplus-value` |
+
+1. prompt to update the index.html file
+
+```
+Scan the 3_Simulation folder and update the index.html file with newly added videos. Git commit and push
+```
