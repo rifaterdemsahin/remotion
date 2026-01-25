@@ -1,5 +1,5 @@
 import React from 'react';
-import { AbsoluteFill, useCurrentFrame, interpolate, spring, useVideoConfig } from 'remotion';
+import { AbsoluteFill, useCurrentFrame, interpolate, spring, useVideoConfig, Img, staticFile } from 'remotion';
 import { z } from 'zod';
 
 export const coderVsWizardSchema = z.object({
@@ -70,7 +70,6 @@ export const CoderVsWizardMain: React.FC<z.infer<typeof coderVsWizardSchema>> = 
        <div style={{
           width: `${leftWidthPct}%`,
           height: '100%',
-          backgroundColor: '#2a2a2a', // Dark Gray Monochrome
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
@@ -80,34 +79,50 @@ export const CoderVsWizardMain: React.FC<z.infer<typeof coderVsWizardSchema>> = 
           borderRight: '4px solid #000',
           zIndex: 10,
        }}>
+          {/* Background Image Layer for Left Side */}
+          <AbsoluteFill style={{ zIndex: -1 }}>
+            <Img 
+              src={staticFile("coder-vs-wizard-images/split_screen_bg.png")}
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                objectPosition: 'left center', // Anchors to the left (Coder side)
+                filter: 'grayscale(100%) brightness(0.7)', // Enhanced monochrome feel
+              }}
+            />
+          </AbsoluteFill>
+
           {/* Content Wrapper to avoid squishing during transition */}
           <div style={{ minWidth: '540px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <h2 style={{
               fontFamily: 'Inter, sans-serif',
-              color: '#666666',
+              color: '#cccccc',
               fontSize: 40,
               marginBottom: 20,
               fontWeight: 600,
               letterSpacing: '4px',
-              textTransform: 'uppercase'
+              textTransform: 'uppercase',
+              textShadow: '0 2px 4px rgba(0,0,0,0.8)'
             }}>
               BEFORE AGENTS
             </h2>
             <h1 style={{ 
               fontFamily: 'Courier New, Courier, monospace', 
-              color: '#aaaaaa', 
+              color: '#ffffff', 
               fontSize: 80, 
               marginBottom: 80,
               letterSpacing: '-2px',
               textTransform: 'uppercase',
-              textAlign: 'center'
+              textAlign: 'center',
+              textShadow: '0 2px 10px rgba(0,0,0,0.8)'
             }}>
               OLD CODER 👨‍💻
             </h1>
             
-            <BulletPoint text="jQuery 📜" delay={START_LEFT} align="left" color="#888888" font="Courier New, Courier, monospace"/>
-            <BulletPoint text="Specific Syntax 🧱" delay={START_LEFT + 60} align="left" color="#888888" font="Courier New, Courier, monospace"/>
-            <BulletPoint text="C++ 🐢" delay={START_LEFT + 120} align="left" color="#888888" font="Courier New, Courier, monospace"/>
+            <BulletPoint text="jQuery 📜" delay={START_LEFT} align="left" color="#dddddd" font="Courier New, Courier, monospace"/>
+            <BulletPoint text="Specific Syntax 🧱" delay={START_LEFT + 60} align="left" color="#dddddd" font="Courier New, Courier, monospace"/>
+            <BulletPoint text="C++ 🐢" delay={START_LEFT + 120} align="left" color="#dddddd" font="Courier New, Courier, monospace"/>
           </div>
        </div>
 
@@ -117,7 +132,6 @@ export const CoderVsWizardMain: React.FC<z.infer<typeof coderVsWizardSchema>> = 
           right: 0,
           width: `${100 - leftWidthPct}%`,
           height: '100%',
-          background: 'linear-gradient(135deg, #1a0b2e 0%, #2d1b4e 100%)', // Deep Purple
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
@@ -125,20 +139,19 @@ export const CoderVsWizardMain: React.FC<z.infer<typeof coderVsWizardSchema>> = 
           overflow: 'hidden',
           zIndex: 5,
        }}>
-          
-          {/* Background Effects */}
-          <AbsoluteFill style={{ zIndex: -1, opacity: 0.3 }}>
-            <div style={{
-              position: 'absolute',
-              top: '20%',
-              left: '50%',
-              width: '400px',
-              height: '400px',
-              borderRadius: '50%',
-              background: 'radial-gradient(circle, rgba(189,0,255,1) 0%, rgba(0,0,0,0) 70%)',
-              filter: 'blur(50px)',
-              transform: 'translate(-50%, -50%)',
-            }} />
+          {/* Background Image Layer for Right Side */}
+          <AbsoluteFill style={{ zIndex: -1 }}>
+             <Img 
+              src={staticFile("coder-vs-wizard-images/split_screen_bg.png")}
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                objectPosition: 'right center', // Anchors to the right (Wizard side)
+              }}
+            />
+            {/* Overlay to ensure text pops against the vibrant background */}
+            <div style={{ position: 'absolute', inset: 0, background: 'rgba(26, 11, 46, 0.4)' }} />
           </AbsoluteFill>
 
           {/* Initial Wizard Content */}
@@ -157,7 +170,7 @@ export const CoderVsWizardMain: React.FC<z.infer<typeof coderVsWizardSchema>> = 
                 fontWeight: 600,
                 letterSpacing: '4px',
                 textTransform: 'uppercase',
-                textShadow: '0 0 10px rgba(189,0,255,0.4)',
+                textShadow: '0 0 10px rgba(0,0,0,0.8)',
              }}>
                 AFTER AGENTS
              </h2>
@@ -173,9 +186,9 @@ export const CoderVsWizardMain: React.FC<z.infer<typeof coderVsWizardSchema>> = 
              }}>
                 NEW WIZARD 🧙‍♂️
              </h1>
-             <BulletPoint text="Testing 🧪" delay={START_RIGHT} align="right" color="#e0e0e0" font="Inter, sans-serif"/>
-             <BulletPoint text="Operations 🚀" delay={START_RIGHT + 60} align="right" color="#e0e0e0" font="Inter, sans-serif"/>
-             <BulletPoint text="Creative Solver 🎨" delay={START_RIGHT + 120} align="right" color="#e0e0e0" font="Inter, sans-serif"/>
+             <BulletPoint text="Testing 🧪" delay={START_RIGHT} align="right" color="#ffffff" font="Inter, sans-serif"/>
+             <BulletPoint text="Operations 🚀" delay={START_RIGHT + 60} align="right" color="#ffffff" font="Inter, sans-serif"/>
+             <BulletPoint text="Creative Solver 🎨" delay={START_RIGHT + 120} align="right" color="#ffffff" font="Inter, sans-serif"/>
           </div>
 
           {/* Final Text (Revealed on expansion) */}
