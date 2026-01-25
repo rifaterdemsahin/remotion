@@ -11,7 +11,7 @@ Remotion script
 
 ```
 # Goto the video folder
-cd c:\projects\remotion\5_Symbols\map-of-consciousness
+cd c:\projects\remotion\5_Symbols\VideoGenerator
 
 # Run it
 npm run dev
@@ -25,6 +25,6 @@ This project follows a structured approach with the following modules:
 - **[2_Environment](./2_Environment)**: Contains the project roadmap and use cases.
 - **[3_Simulation](./3_Simulation)**: focus on UI, technologies (HTML5, CSS3, JS), and best practices.
 - **[4_Formula](./4_Formula)**: Guides and best practices built by GPT.
-- **[5_Symbols](./5_Symbols)**: Core source code and main application files.
+- **[5_Symbols](./5_Symbols)**: Consolidated Remotion video generator with all video compositions.
 - **[6_Semblance](./6_Semblance)**: Error logs, solutions, and debugging tips.
 - **[7_Testing_known](./7_Testing_known)**: Validation, test plans, and acceptance criteria.
