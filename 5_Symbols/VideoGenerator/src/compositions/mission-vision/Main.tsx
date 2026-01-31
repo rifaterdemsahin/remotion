@@ -1,4 +1,4 @@
-import { AbsoluteFill, Sequence } from 'remotion';
+import { AbsoluteFill, Sequence, staticFile } from 'remotion';
 import { z } from 'zod';
 import { TitleScene } from './TitleScene';
 import { VisionScene } from './VisionScene';
@@ -23,7 +23,7 @@ export const MissionVisionMain: React.FC<z.infer<typeof missionVisionSchema>> = 
           title="Our Mission" 
           subtitle="Empowering the Future" 
           primaryColor={primaryColor}
-          image="/mission-bg.png"
+          image={staticFile("mission-bg.png")}
         />
       </Sequence>
       <Sequence from={35} durationInFrames={45}>
@@ -31,14 +31,14 @@ export const MissionVisionMain: React.FC<z.infer<typeof missionVisionSchema>> = 
            title="The Vision"
            text="An AI Skilled Workforce"
            secondaryColor={secondaryColor}
-           image="/vision-workforce.png"
+           image={staticFile("vision-workforce.png")}
         />
       </Sequence>
       <Sequence from={70} durationInFrames={45}>
         <GrowthScene 
            primaryColor={primaryColor}
            accentColor={accentColor}
-           image="/growth-graph.png"
+           image={staticFile("growth-graph.png")}
         />
       </Sequence>
       <Sequence from={105} durationInFrames={45}>
