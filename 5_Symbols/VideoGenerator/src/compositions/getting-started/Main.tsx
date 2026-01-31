@@ -17,7 +17,8 @@ const ItemCard = ({
   delay, 
   direction = 'left',
   index,
-  showCheckmark = false
+  showCheckmark = false,
+  checkmarkDelay = 0
 }: { 
   imageSrc: string, 
   title: string, 
@@ -25,7 +26,8 @@ const ItemCard = ({
   delay: number,
   direction?: 'left' | 'right' | 'top',
   index: number,
-  showCheckmark?: boolean
+  showCheckmark?: boolean,
+  checkmarkDelay?: number
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -51,7 +53,7 @@ const ItemCard = ({
 
   // Checkmark animation
   const checkScale = spring({
-      frame: frame - (delay + 30), 
+      frame: frame - checkmarkDelay, 
       fps,
       config: { damping: 10 }
   });
@@ -115,8 +117,9 @@ export const GettingStartedMain: React.FC<z.infer<typeof gettingStartedSchema>> 
   const titleOpacity = interpolate(frame, [0, 20], [0, 1]);
   const titleScale = interpolate(frame, [0, 30], [0.8, 1], { extrapolateRight: 'clamp' });
   
+  
   // Summary State
-  const isSummary = frame >= 600; // 20s
+  const isSummary = frame >= 210; // 7s
   
   return (
     <AbsoluteFill className="bg-black text-white font-sans">
@@ -140,8 +143,8 @@ export const GettingStartedMain: React.FC<z.infer<typeof gettingStartedSchema>> 
         </AbsoluteFill>
       </Sequence>
 
-      {/* Prerequisite 1: GitHub - 2s onwards */}
-      <Sequence from={60}>
+      {/* Prerequisite 1: GitHub - 1.5s onwards (frame 45) */}
+      <Sequence from={45}>
         <div className={`absolute inset-0 transition-all duration-1000 ${isSummary ? 'translate-x-[0px] translate-y-0 scale-75' : ''}`}>
              {!isSummary && <div className="absolute top-10 left-10 text-xl font-mono text-cyan-400/80">01_GITHUB_ACCESS</div>}
              <ItemCard 
@@ -152,12 +155,13 @@ export const GettingStartedMain: React.FC<z.infer<typeof gettingStartedSchema>> 
                 direction="left"
                 index={0}
                 showCheckmark={isSummary}
+                checkmarkDelay={165} // Relative frame 165 + Sequence 45 = 210
              />
         </div>
       </Sequence>
 
-      {/* Prerequisite 2: Gemini - 8s onwards */}
-      <Sequence from={240}>
+      {/* Prerequisite 2: Gemini - 3s onwards (frame 100) */}
+      <Sequence from={100}>
         <div className={`absolute inset-0 transition-all duration-1000 ${isSummary ? 'translate-x-[0px] translate-y-0 scale-75' : ''}`}>
             {!isSummary && <div className="absolute top-10 transform -translate-x-1/2 left-1/2 text-xl font-mono text-purple-400/80">02_GEMINI_AI</div>}
             <ItemCard 
@@ -168,12 +172,13 @@ export const GettingStartedMain: React.FC<z.infer<typeof gettingStartedSchema>> 
                 direction="top"
                 index={1}
                 showCheckmark={isSummary}
+                checkmarkDelay={115} // Relative frame 115 + Sequence 100 = 215
              />
         </div>
       </Sequence>
 
-      {/* Prerequisite 3: Antigravity - 14s onwards */}
-      <Sequence from={420}>
+      {/* Prerequisite 3: Antigravity - 5s onwards (frame 155) */}
+      <Sequence from={155}>
          <div className={`absolute inset-0 transition-all duration-1000 ${isSummary ? 'translate-x-[0px] translate-y-0 scale-75' : ''}`}>
              {!isSummary && <div className="absolute top-10 right-10 text-xl font-mono text-pink-400/80">03_ANTIGRAVITY_TOOLS</div>}
              <ItemCard 
@@ -184,12 +189,13 @@ export const GettingStartedMain: React.FC<z.infer<typeof gettingStartedSchema>> 
                 direction="right"
                 index={2}
                 showCheckmark={isSummary}
+                checkmarkDelay={65} // Relative frame 65 + Sequence 155 = 220
              />
         </div>
       </Sequence>
 
-      {/* Summary Overlay - 20s-24s */}
-      <Sequence from={600} durationInFrames={120}>
+      {/* Summary Overlay - 7s-9s (210-270) */}
+      <Sequence from={210} durationInFrames={60}>
           <div className="absolute inset-0 flex flex-col items-center justify-end pb-20">
               <h2 className="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400 animate-pulse">
                   Ready to build something amazing!
@@ -197,9 +203,9 @@ export const GettingStartedMain: React.FC<z.infer<typeof gettingStartedSchema>> 
           </div>
       </Sequence>
       
-      {/* Outro 24s-26s */}
-      <Sequence from={720}>
-         <AbsoluteFill className="bg-black justify-center items-center" style={{ opacity: interpolate(frame - 720, [0, 15], [0, 1]) }}>
+      {/* Outro 9s-10s (270-300) */}
+      <Sequence from={270}>
+         <AbsoluteFill className="bg-black justify-center items-center" style={{ opacity: interpolate(frame - 270, [0, 15], [0, 1]) }}>
             <h1 className="text-8xl text-white font-thin tracking-widest">
                 Go.
             </h1>

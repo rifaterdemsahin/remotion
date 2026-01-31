@@ -1,377 +1,412 @@
 <!doctype html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Remotion Video Gallery</title>
-  <style>
-    body {
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f0f2f5;
-      margin: 0;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    h1 {
-      color: #2c3e50;
-      margin-bottom: 30px;
-    }
-
-    .container {
-      display: flex;
-      gap: 20px;
-      max-width: 1200px;
-      width: 100%;
-    }
-
-    .sidebar {
-      flex: 1;
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    .video-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .video-item {
-      padding: 15px;
-      margin-bottom: 10px;
-      background-color: #f8f9fa;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      border-left: 4px solid transparent;
-    }
-
-    .video-item:hover {
-      background-color: #e9ecef;
-      transform: translateX(5px);
-    }
-
-    .video-item.active {
-      background-color: #e3f2fd;
-      border-left-color: #2196f3;
-      color: #1976d2;
-      font-weight: bold;
-    }
-
-    .main-content {
-      flex: 3;
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .video-player-container {
-      width: 100%;
-      aspect-ratio: 16/9;
-      background: #000;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-      position: relative;
-    }
-
-    video {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-
-    .placeholder {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      color: white;
-      text-align: center;
-    }
-
-    .video-info {
-      margin-top: 20px;
-      text-align: left;
-      width: 100%;
-    }
-
-    .status-badge {
-      display: inline-block;
-      padding: 4px 8px;
-      border-radius: 4px;
-      font-size: 12px;
-      font-weight: bold;
-      text-transform: uppercase;
-    }
-
-    .status-found {
-      background-color: #d4edda;
-      color: #155724;
-    }
-
-    .status-missing {
-      background-color: #f8d7da;
-      color: #721c24;
-    }
-
-    .copy-btn {
-      background-color: #f0f0f0;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      padding: 5px 10px;
-      cursor: pointer;
-      margin-left: 10px;
-      font-size: 12px;
-      transition: background-color 0.2s;
-    }
-
-    .copy-btn:hover {
-      background-color: #e0e0e0;
-    }
-  </style>
-</head>
-
-<body>
-  <h1>🎬 Remotion Project Gallery</h1>
-
-  <div class="container">
-    <aside class="sidebar">
-      <h3>Select a Video</h3>
-      <ul class="video-list" id="videoList">
-        <!-- List items will be populated by JS -->
-      </ul>
-    </aside>
-
-    <main class="main-content">
-      <div class="video-player-container">
-        <video id="mainVideo" controls>
-          <source src="" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-        <div id="placeholder" class="placeholder" style="display: none">
-          <h2>Video Not Found</h2>
-          <p>
-            Please render this video using:<br /><code>npx remotion render</code>
-          </p>
-        </div>
-      </div>
-
-      <div class="video-info">
-        <h2 id="videoTitle">Select a video to start</h2>
-        <div id="videoDescription">description...</div>
-
-        <div id="versionContainer" style="margin-top: 15px; display: none;">
-          <span style="font-size: 14px; color: #555; margin-right: 10px;">Versions:</span>
-          <div id="versionButtons" style="display: inline-flex; gap: 5px;"></div>
-        </div>
-
-        <div style="margin-top: 15px; display: flex; align-items: center;">
-          <span>Path: <code id="videoPath">...</code></span>
-          <button id="copyBtn" class="copy-btn" onclick="copyLink()">📋 Copy Link</button>
-          <span id="videoStatus" class="status-badge" style="margin-left: 10px;"></span>
-        </div>
-      </div>
-    </main>
-  </div>
-
-  <script>
-    // Configuration of available videos
-    // Paths are relative to this HTML file in 3_Simulation/
-    const videos = [
-      {
-        id: 'hello-world',
-        title: 'Hello World',
-        description: 'The simulation starter template (Please Render)',
-        basePath: 'HelloWorld',
-        versions: [1]
-      },
-      {
-        id: 'ai-avalanche',
-        title: 'AI Avalanche',
-        description: 'High-energy kinetic typography emphasizing the urgency of the AI revolution. "This is an AI avalanche... Nobody\'s job is secure anymore."',
-        basePath: 'AiAvalanche',
-        versions: [1, 2]
-      },
-      {
-        id: 'surplus-value',
-        title: 'Surplus Value Cycle',
-        description: 'Animation showing the extraction of surplus value in a capitalist system.',
-        basePath: 'SurplusValue',
-        versions: [1, 2, 3, 4]
-      },
-      {
-        id: 'bayesian',
-        title: 'Bayesian Logic',
-        description: 'Visualizing beliefs updating with new evidence.',
-        basePath: 'BayesianLogic',
-        versions: [1]
-      },
-      {
-        id: 'ai-transform',
-        title: 'AI Transformation',
-        description: 'The 3-stage journey: Assessment, Simulation, Certification.',
-        basePath: 'AiTransformation',
-        versions: [1, 2, 3, 4]
-      },
-      {
-        id: 'sim-journey',
-        title: 'Simulation Journey',
-        description: 'A detailed walkthrough of the upskilling process.',
-        basePath: 'SimulationJourney',
-        versions: [1]
-      },
-      {
-        id: 'map-of-consciousness',
-        title: 'Map of Consciousness',
-        description: 'A visual scale of consciousness levels from Shame to Enlightenment, featuring energy levels and wave animations.',
-        basePath: 'MapOfConsciousness',
-        versions: [1]
-      }
-    ];
-
-    const videoList = document.getElementById('videoList');
-    const mainVideo = document.getElementById('mainVideo');
-    const videoTitle = document.getElementById('videoTitle');
-    const videoDesc = document.getElementById('videoDescription');
-    const videoPath = document.getElementById('videoPath');
-    const videoStatus = document.getElementById('videoStatus');
-    const placeholder = document.getElementById('placeholder');
-    const versionContainer = document.getElementById('versionContainer');
-    const versionButtons = document.getElementById('versionButtons');
-
-    let currentVideo = null;
-
-    function getVersionPath(basePath, version) {
-      // Logic: version 1 = "Name.mp4", version 2 = "Name2.mp4", etc.
-      const suffix = version === 1 ? '' : version;
-      return `${basePath}${suffix}.mp4`;
-    }
-
-    async function loadVideo(video, version = null) {
-      currentVideo = video;
-
-      // Set default version to last available if not specified, or 1
-      const selectedVersion = version || video.versions[video.versions.length - 1];
-
-      // Update UI text
-      videoTitle.textContent = video.title;
-      videoDesc.textContent = video.description;
-
-      // Update Active State in Sidebar
-      document.querySelectorAll('.video-item').forEach(el => el.classList.remove('active'));
-      document.getElementById(`item-${video.id}`).classList.add('active');
-
-      // Setup Versions
-      renderVersionButtons(video, selectedVersion);
-
-      // Set Video Source
-      const path = getVersionPath(video.basePath, selectedVersion);
-      videoPath.textContent = path; // Display relative path
-
-      mainVideo.style.display = 'block';
-      placeholder.style.display = 'none';
-      mainVideo.src = path;
-
-      // Attempt to play
-      try {
-        // Reset status
-        videoStatus.textContent = "Checking...";
-        videoStatus.className = "status-badge";
-
-        mainVideo.onerror = () => showError();
-        await mainVideo.play();
-        videoStatus.textContent = "Available";
-        videoStatus.className = "status-badge status-found";
-      } catch (e) {
-        console.log("Autoplay prevented or load error", e);
-      }
-    }
-
-    function renderVersionButtons(video, activeVersion) {
-      if (!video.versions || video.versions.length <= 1) {
-        versionContainer.style.display = 'none';
-        return;
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Remotion Video Gallery</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f0f2f5;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
       }
 
-      versionContainer.style.display = 'block';
-      versionButtons.innerHTML = '';
+      h1 {
+        color: #2c3e50;
+        margin-bottom: 30px;
+      }
 
-      video.versions.forEach(v => {
-        const btn = document.createElement('button');
-        btn.textContent = `v${v}`;
-        btn.style.padding = '5px 10px';
-        btn.style.cursor = 'pointer';
-        btn.style.border = '1px solid #ccc';
-        btn.style.borderRadius = '4px';
-        btn.style.backgroundColor = v === activeVersion ? '#007bff' : '#f8f9fa';
-        btn.style.color = v === activeVersion ? 'white' : '#333';
+      .container {
+        display: flex;
+        gap: 20px;
+        max-width: 1200px;
+        width: 100%;
+      }
 
-        btn.onclick = () => loadVideo(video, v);
-        versionButtons.appendChild(btn);
-      });
-    }
+      .sidebar {
+        flex: 1;
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
 
-    function showError() {
-      mainVideo.style.display = 'none';
-      placeholder.style.display = 'flex';
-      videoStatus.textContent = "Missing / Not Rendered";
-      videoStatus.className = "status-badge status-missing";
-    }
+      .video-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
 
-    function copyLink() {
-      // When copying, we might want the absolute URL if hosted, but here we just copy what's shown
-      // or construct a full URL. Let's copy the full URL for easier sharing.
-      const fullUrl = new URL(videoPath.textContent, window.location.href).href;
+      .video-item {
+        padding: 15px;
+        margin-bottom: 10px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        border-left: 4px solid transparent;
+      }
 
-      const tempInput = document.createElement("input");
-      tempInput.value = fullUrl;
-      document.body.appendChild(tempInput);
-      tempInput.select();
-      document.execCommand("copy");
-      document.body.removeChild(tempInput);
+      .video-item:hover {
+        background-color: #e9ecef;
+        transform: translateX(5px);
+      }
 
-      const btn = document.getElementById('copyBtn');
-      const originalText = btn.innerHTML;
-      btn.innerHTML = "✅ Copied!";
-      setTimeout(() => {
-        btn.innerHTML = originalText;
-      }, 2000);
-    }
+      .video-item.active {
+        background-color: #e3f2fd;
+        border-left-color: #2196f3;
+        color: #1976d2;
+        font-weight: bold;
+      }
 
-    // Init List
-    videos.forEach(video => {
-      const li = document.createElement('li');
-      li.className = 'video-item';
-      li.id = `item-${video.id}`;
-      li.innerHTML = `
+      .main-content {
+        flex: 3;
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .video-player-container {
+        width: 100%;
+        aspect-ratio: 16/9;
+        background: #000;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        position: relative;
+      }
+
+      video {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+
+      .placeholder {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        text-align: center;
+      }
+
+      .video-info {
+        margin-top: 20px;
+        text-align: left;
+        width: 100%;
+      }
+
+      .status-badge {
+        display: inline-block;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: bold;
+        text-transform: uppercase;
+      }
+
+      .status-found {
+        background-color: #d4edda;
+        color: #155724;
+      }
+
+      .status-missing {
+        background-color: #f8d7da;
+        color: #721c24;
+      }
+
+      .copy-btn {
+        background-color: #f0f0f0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 5px 10px;
+        cursor: pointer;
+        margin-left: 10px;
+        font-size: 12px;
+        transition: background-color 0.2s;
+      }
+
+      .copy-btn:hover {
+        background-color: #e0e0e0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>🎬 Remotion Project Gallery</h1>
+
+    <div class="container">
+      <aside class="sidebar">
+        <h3>Select a Video</h3>
+        <ul class="video-list" id="videoList">
+          <!-- List items will be populated by JS -->
+        </ul>
+      </aside>
+
+      <main class="main-content">
+        <div class="video-player-container">
+          <video id="mainVideo" controls>
+            <source src="" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+          <div id="placeholder" class="placeholder" style="display: none">
+            <h2>Video Not Found</h2>
+            <p>
+              Please render this video using:<br /><code
+                >npx remotion render</code
+              >
+            </p>
+          </div>
+        </div>
+
+        <div class="video-info">
+          <h2 id="videoTitle">Select a video to start</h2>
+          <div id="videoDescription">description...</div>
+
+          <div id="versionContainer" style="margin-top: 15px; display: none">
+            <span style="font-size: 14px; color: #555; margin-right: 10px"
+              >Versions:</span
+            >
+            <div
+              id="versionButtons"
+              style="display: inline-flex; gap: 5px"
+            ></div>
+          </div>
+
+          <div style="margin-top: 15px; display: flex; align-items: center">
+            <span>Path: <code id="videoPath">...</code></span>
+            <button id="copyBtn" class="copy-btn" onclick="copyLink()">
+              📋 Copy Link
+            </button>
+            <span
+              id="videoStatus"
+              class="status-badge"
+              style="margin-left: 10px"
+            ></span>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      // Configuration of available videos
+      // Paths are relative to this HTML file in 3_Simulation/
+      const videos = [
+        {
+          id: "getting-started",
+          title: "Getting Started",
+          description: "Prerequisites and setup guide integration.",
+          basePath: "GettingStarted",
+          versions: [1, 2],
+        },
+        {
+          id: "coder-vs-wizard",
+          title: "Coder vs Wizard",
+          description:
+            'Comparison between traditional coding and the new "Wizard" approach.',
+          basePath: "CoderVsWizard",
+          versions: [1, 2],
+        },
+        {
+          id: "dialectic",
+          title: "Dialectic",
+          description: "Visual representation of dialectic processes.",
+          basePath: "Dialectic",
+          versions: [1],
+        },
+        {
+          id: "ai-avalanche",
+          title: "AI Avalanche",
+          description:
+            'High-energy kinetic typography emphasizing the urgency of the AI revolution. "This is an AI avalanche... Nobody\'s job is secure anymore."',
+          basePath: "AiAvalanche",
+          versions: [1, 2],
+        },
+        {
+          id: "surplus-value",
+          title: "Surplus Value Cycle",
+          description:
+            "Animation showing the extraction of surplus value in a capitalist system.",
+          basePath: "SurplusValue",
+          versions: [1, 2, 3, 4],
+        },
+        {
+          id: "bayesian",
+          title: "Bayesian Logic",
+          description: "Visualizing beliefs updating with new evidence.",
+          basePath: "BayesianLogic",
+          versions: [1],
+        },
+        {
+          id: "ai-transform",
+          title: "AI Transformation",
+          description:
+            "The 3-stage journey: Assessment, Simulation, Certification.",
+          basePath: "AiTransformation",
+          versions: [1, 2, 3, 4],
+        },
+        {
+          id: "sim-journey",
+          title: "Simulation Journey",
+          description: "A detailed walkthrough of the upskilling process.",
+          basePath: "SimulationJourney",
+          versions: [1],
+        },
+        {
+          id: "map-of-consciousness",
+          title: "Map of Consciousness",
+          description:
+            "A visual scale of consciousness levels from Shame to Enlightenment, featuring energy levels and wave animations.",
+          basePath: "MapOfConsciousness",
+          versions: [1],
+        },
+      ];
+
+      const videoList = document.getElementById("videoList");
+      const mainVideo = document.getElementById("mainVideo");
+      const videoTitle = document.getElementById("videoTitle");
+      const videoDesc = document.getElementById("videoDescription");
+      const videoPath = document.getElementById("videoPath");
+      const videoStatus = document.getElementById("videoStatus");
+      const placeholder = document.getElementById("placeholder");
+      const versionContainer = document.getElementById("versionContainer");
+      const versionButtons = document.getElementById("versionButtons");
+
+      let currentVideo = null;
+
+      function getVersionPath(basePath, version) {
+        // Logic: version 1 = "Name.mp4", version 2 = "Name2.mp4", etc.
+        const suffix = version === 1 ? "" : version;
+        return `${basePath}${suffix}.mp4`;
+      }
+
+      async function loadVideo(video, version = null) {
+        currentVideo = video;
+
+        // Set default version to last available if not specified, or 1
+        const selectedVersion =
+          version || video.versions[video.versions.length - 1];
+
+        // Update UI text
+        videoTitle.textContent = video.title;
+        videoDesc.textContent = video.description;
+
+        // Update Active State in Sidebar
+        document
+          .querySelectorAll(".video-item")
+          .forEach((el) => el.classList.remove("active"));
+        document.getElementById(`item-${video.id}`).classList.add("active");
+
+        // Setup Versions
+        renderVersionButtons(video, selectedVersion);
+
+        // Set Video Source
+        const path = getVersionPath(video.basePath, selectedVersion);
+        videoPath.textContent = path; // Display relative path
+
+        mainVideo.style.display = "block";
+        placeholder.style.display = "none";
+        mainVideo.src = path;
+
+        // Attempt to play
+        try {
+          // Reset status
+          videoStatus.textContent = "Checking...";
+          videoStatus.className = "status-badge";
+
+          mainVideo.onerror = () => showError();
+          await mainVideo.play();
+          videoStatus.textContent = "Available";
+          videoStatus.className = "status-badge status-found";
+        } catch (e) {
+          console.log("Autoplay prevented or load error", e);
+        }
+      }
+
+      function renderVersionButtons(video, activeVersion) {
+        if (!video.versions || video.versions.length <= 1) {
+          versionContainer.style.display = "none";
+          return;
+        }
+
+        versionContainer.style.display = "block";
+        versionButtons.innerHTML = "";
+
+        video.versions.forEach((v) => {
+          const btn = document.createElement("button");
+          btn.textContent = `v${v}`;
+          btn.style.padding = "5px 10px";
+          btn.style.cursor = "pointer";
+          btn.style.border = "1px solid #ccc";
+          btn.style.borderRadius = "4px";
+          btn.style.backgroundColor =
+            v === activeVersion ? "#007bff" : "#f8f9fa";
+          btn.style.color = v === activeVersion ? "white" : "#333";
+
+          btn.onclick = () => loadVideo(video, v);
+          versionButtons.appendChild(btn);
+        });
+      }
+
+      function showError() {
+        mainVideo.style.display = "none";
+        placeholder.style.display = "flex";
+        videoStatus.textContent = "Missing / Not Rendered";
+        videoStatus.className = "status-badge status-missing";
+      }
+
+      function copyLink() {
+        // When copying, we might want the absolute URL if hosted, but here we just copy what's shown
+        // or construct a full URL. Let's copy the full URL for easier sharing.
+        const fullUrl = new URL(videoPath.textContent, window.location.href)
+          .href;
+
+        const tempInput = document.createElement("input");
+        tempInput.value = fullUrl;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand("copy");
+        document.body.removeChild(tempInput);
+
+        const btn = document.getElementById("copyBtn");
+        const originalText = btn.innerHTML;
+        btn.innerHTML = "✅ Copied!";
+        setTimeout(() => {
+          btn.innerHTML = originalText;
+        }, 2000);
+      }
+
+      // Init List
+      videos.forEach((video) => {
+        const li = document.createElement("li");
+        li.className = "video-item";
+        li.id = `item-${video.id}`;
+        li.innerHTML = `
                 <div style="font-weight:bold;">${video.title}</div>
                 <div style="font-size:12px; color:#666;">${video.description}</div>
             `;
-      li.onclick = () => loadVideo(video);
-      videoList.appendChild(li);
-    });
+        li.onclick = () => loadVideo(video);
+        videoList.appendChild(li);
+      });
 
-    // Load first item automatically (Simulation Journey)
-    if (videos.length > 0) {
-      loadVideo(videos[4]);
-    }
-  </script>
-</body>
-
+      // Load first item automatically (Simulation Journey)
+      if (videos.length > 0) {
+        loadVideo(videos[4]);
+      }
+    </script>
+  </body>
 </html>
