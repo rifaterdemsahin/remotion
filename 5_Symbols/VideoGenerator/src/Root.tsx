@@ -13,6 +13,7 @@ import { MapOfConsciousness } from "./compositions/map-of-consciousness/MapOfCon
 import { SimulationJourneyMain, simulationSchema } from "./compositions/simulation-journey/Main";
 import { SurplusValueMain, surplusValueSchema } from "./compositions/surplus-value/Main";
 import { CoderVsWizardMain, coderVsWizardSchema } from "./compositions/coder-vs-wizard/Main";
+import { GettingStartedMain, gettingStartedSchema } from "./compositions/getting-started/Main";
 
 // Each <Composition> is an entry in the sidebar!
 
@@ -170,6 +171,22 @@ export const RemotionRoot: React.FC = () => {
         schema={coderVsWizardSchema}
         defaultProps={{}}
       />
+      {/* Getting Started Prerequisites */}
+      <Composition
+        id="GettingStarted"
+        component={GettingStartedMain}
+        durationInFrames={780} 
+        fps={30}
+        width={1920}
+        height={1080}
+        schema={gettingStartedSchema}
+        defaultProps={{
+            titleColor: '#ffffff',
+            primaryColor: '#8b5cf6',
+            secondaryColor: '#06b6d4',
+        }}
+      />
     </>
   );
 };
+
