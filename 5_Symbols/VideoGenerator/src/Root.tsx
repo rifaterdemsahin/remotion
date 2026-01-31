@@ -14,6 +14,7 @@ import { SimulationJourneyMain, simulationSchema } from "./compositions/simulati
 import { SurplusValueMain, surplusValueSchema } from "./compositions/surplus-value/Main";
 import { CoderVsWizardMain, coderVsWizardSchema } from "./compositions/coder-vs-wizard/Main";
 import { GettingStartedMain, gettingStartedSchema } from "./compositions/getting-started/Main";
+import { MissionVisionMain, missionVisionSchema } from "./compositions/mission-vision/Main";
 
 // Each <Composition> is an entry in the sidebar!
 
@@ -184,6 +185,21 @@ export const RemotionRoot: React.FC = () => {
             titleColor: '#ffffff',
             primaryColor: '#8b5cf6',
             secondaryColor: '#06b6d4',
+        }}
+      />
+      {/* Mission Vision Video */}
+      <Composition
+        id="MissionVision"
+        component={MissionVisionMain}
+        durationInFrames={570}
+        fps={30}
+        width={1920}
+        height={1080}
+        schema={missionVisionSchema}
+        defaultProps={{
+            primaryColor: '#3b82f6',
+            secondaryColor: '#8b5cf6',
+            accentColor: '#10b981',
         }}
       />
     </>
