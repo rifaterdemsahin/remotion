@@ -16,6 +16,7 @@ import { CoderVsWizardMain, coderVsWizardSchema } from "./compositions/coder-vs-
 import { GettingStartedMain, gettingStartedSchema } from "./compositions/getting-started/Main";
 import { MissionVisionMain, missionVisionSchema } from "./compositions/mission-vision/Main";
 import { OperationalHeadroomMain, operationalHeadroomSchema } from "./compositions/operational-headroom/Main";
+import { CPUHeadroomExplainer } from "./compositions/cpu-headroom/CPUHeadroomExplainer";
 
 // Each <Composition> is an entry in the sidebar!
 
@@ -203,7 +204,6 @@ export const RemotionRoot: React.FC = () => {
           accentColor: '#10b981',
         }}
       />
-      {/* Operational Headroom Video */}
       <Composition
         id="OperationalHeadroom"
         component={OperationalHeadroomMain}
@@ -216,6 +216,16 @@ export const RemotionRoot: React.FC = () => {
           primaryColor: '#e74c3c',
           textColor: '#ffffff',
         }}
+      />
+      {/* CPU Headroom Explainer */}
+      <Composition
+        id="CPUHeadroomExplainer"
+        component={CPUHeadroomExplainer}
+        durationInFrames={10800}
+        fps={60}
+        width={1920}
+        height={1080}
+        defaultProps={{}}
       />
     </>
   );
