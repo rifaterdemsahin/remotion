@@ -17,6 +17,7 @@ import { GettingStartedMain, gettingStartedSchema } from "./compositions/getting
 import { MissionVisionMain, missionVisionSchema } from "./compositions/mission-vision/Main";
 import { OperationalHeadroomMain, operationalHeadroomSchema } from "./compositions/operational-headroom/Main";
 import { CPUHeadroomExplainer } from "./compositions/cpu-headroom/CPUHeadroomExplainer";
+import { ThumbnailMain } from "./compositions/thumbnail/ThumbnailMain";
 
 // Each <Composition> is an entry in the sidebar!
 
@@ -226,6 +227,16 @@ export const RemotionRoot: React.FC = () => {
         width={1920}
         height={1080}
         defaultProps={{}}
+      />
+
+      {/* Thumbnail */}
+      <Composition
+        id="Thumbnail"
+        component={ThumbnailMain}
+        durationInFrames={300}
+        fps={30}
+        width={1920}
+        height={1080}
       />
     </>
   );
