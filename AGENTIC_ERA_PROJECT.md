@@ -6,7 +6,7 @@ This is a complete Remotion video project for **"The Agentic Era: Managing 240+ 
 
 ## Video Specifications
 
-- **Duration**: 8-10 minutes (480-600 seconds)
+- **Duration**: 10 minutes (600 seconds)
 - **Resolution**: 1920x1080 (Full HD)
 - **Frame Rate**: 30 FPS
 - **Total Frames**: 18,000 frames
