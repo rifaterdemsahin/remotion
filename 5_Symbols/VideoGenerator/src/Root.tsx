@@ -15,6 +15,7 @@ import { SurplusValueMain, surplusValueSchema } from "./compositions/surplus-val
 import { CoderVsWizardMain, coderVsWizardSchema } from "./compositions/coder-vs-wizard/Main";
 import { GettingStartedMain, gettingStartedSchema } from "./compositions/getting-started/Main";
 import { MissionVisionMain, missionVisionSchema } from "./compositions/mission-vision/Main";
+import { OperationalHeadroomMain, operationalHeadroomSchema } from "./compositions/operational-headroom/Main";
 
 // Each <Composition> is an entry in the sidebar!
 
@@ -176,15 +177,15 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id="GettingStarted"
         component={GettingStartedMain}
-        durationInFrames={300} 
+        durationInFrames={300}
         fps={30}
         width={1920}
         height={1080}
         schema={gettingStartedSchema}
         defaultProps={{
-            titleColor: '#ffffff',
-            primaryColor: '#8b5cf6',
-            secondaryColor: '#06b6d4',
+          titleColor: '#ffffff',
+          primaryColor: '#8b5cf6',
+          secondaryColor: '#06b6d4',
         }}
       />
       {/* Mission Vision Video */}
@@ -197,12 +198,25 @@ export const RemotionRoot: React.FC = () => {
         height={1080}
         schema={missionVisionSchema}
         defaultProps={{
-            primaryColor: '#3b82f6',
-            secondaryColor: '#8b5cf6',
-            accentColor: '#10b981',
+          primaryColor: '#3b82f6',
+          secondaryColor: '#8b5cf6',
+          accentColor: '#10b981',
+        }}
+      />
+      {/* Operational Headroom Video */}
+      <Composition
+        id="OperationalHeadroom"
+        component={OperationalHeadroomMain}
+        durationInFrames={1440}
+        fps={30}
+        width={1920}
+        height={1080}
+        schema={operationalHeadroomSchema}
+        defaultProps={{
+          primaryColor: '#e74c3c',
+          textColor: '#ffffff',
         }}
       />
     </>
   );
 };
-
