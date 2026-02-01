@@ -18,6 +18,7 @@ import { MissionVisionMain, missionVisionSchema } from "./compositions/mission-v
 import { OperationalHeadroomMain, operationalHeadroomSchema } from "./compositions/operational-headroom/Main";
 import { CPUHeadroomExplainer } from "./compositions/cpu-headroom/CPUHeadroomExplainer";
 import { ThumbnailMain } from "./compositions/thumbnail/ThumbnailMain";
+import { AgenticEraMain, agenticEraSchema } from "./compositions/agentic-era/Main";
 
 // Each <Composition> is an entry in the sidebar!
 
@@ -237,6 +238,20 @@ export const RemotionRoot: React.FC = () => {
         fps={30}
         width={1920}
         height={1080}
+      />
+
+      {/* Agentic Era: Managing 240+ n8n Workflows */}
+      <Composition
+        id="AgenticEra"
+        component={AgenticEraMain}
+        durationInFrames={18000} // 600 seconds * 30 fps = 18000 frames (10 minutes)
+        fps={30}
+        width={1920}
+        height={1080}
+        schema={agenticEraSchema}
+        defaultProps={{
+          titleColor: '#007bff',
+        }}
       />
     </>
   );
