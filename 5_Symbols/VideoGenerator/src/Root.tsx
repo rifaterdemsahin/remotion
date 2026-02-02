@@ -15,6 +15,7 @@ import { SurplusValueMain, surplusValueSchema } from "./compositions/surplus-val
 import { CoderVsWizardMain, coderVsWizardSchema } from "./compositions/coder-vs-wizard/Main";
 import { GettingStartedMain, gettingStartedSchema } from "./compositions/getting-started/Main";
 import { MissionVisionMain, missionVisionSchema } from "./compositions/mission-vision/Main";
+import { AgenticWorkflowMain, agenticWorkflowSchema } from "./compositions/agentic-workflow/Main";
 
 // Each <Composition> is an entry in the sidebar!
 
@@ -200,6 +201,21 @@ export const RemotionRoot: React.FC = () => {
             primaryColor: '#3b82f6',
             secondaryColor: '#8b5cf6',
             accentColor: '#10b981',
+        }}
+      />
+      {/* Agentic Workflow Video */}
+      <Composition
+        id="AgenticWorkflow"
+        component={AgenticWorkflowMain}
+        durationInFrames={12000}
+        fps={30}
+        width={1920}
+        height={1080}
+        schema={agenticWorkflowSchema}
+        defaultProps={{
+            primaryColor: '#ef4444',
+            secondaryColor: '#3b82f6',
+            accentColor: '#f59e0b',
         }}
       />
     </>
