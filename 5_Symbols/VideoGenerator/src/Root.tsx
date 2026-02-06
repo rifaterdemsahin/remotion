@@ -20,6 +20,7 @@ import { OperationalHeadroomMain, operationalHeadroomSchema } from "./compositio
 import { CPUHeadroomExplainer } from "./compositions/cpu-headroom/CPUHeadroomExplainer";
 import { ThumbnailMain } from "./compositions/thumbnail/ThumbnailMain";
 import { AgenticEraMain, agenticEraSchema } from "./compositions/agentic-era/Main";
+import { FerrariHook } from "./compositions/feb-video-1/01_ferrari_hook";
 
 // Each <Composition> is an entry in the sidebar!
 
@@ -268,6 +269,16 @@ export const RemotionRoot: React.FC = () => {
             secondaryColor: '#3b82f6',
             accentColor: '#f59e0b',
         }}
+      />
+      
+      {/* Ferrari Hook Animation */}
+      <Composition
+        id="FerrariHook"
+        component={FerrariHook}
+        durationInFrames={150}
+        fps={30}
+        width={1920}
+        height={1080}
       />
     </>
   );
