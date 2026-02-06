@@ -22,6 +22,17 @@ import { ThumbnailMain } from "./compositions/thumbnail/ThumbnailMain";
 import { AgenticEraMain, agenticEraSchema } from "./compositions/agentic-era/Main";
 import { FerrariHook } from "./compositions/feb-video-1/01_ferrari_hook";
 import { WorkforceCounter } from "./compositions/feb-video-1/02_workforce_counter";
+import { N8nMammothZoom } from "./compositions/feb-video-1/03_n8n_mammoth";
+import { SkillsGap } from "./compositions/feb-video-1/04_skills_gap";
+import { TelegramCommandCenter } from "./compositions/feb-video-1/05_telegram_channels";
+import { ParaMethod } from "./compositions/feb-video-1/06_para_method";
+import { BlacklistSystem } from "./compositions/feb-video-1/07_blacklist_system";
+import { McpProtocol } from "./compositions/feb-video-1/08_mcp_protocol";
+import { RevolutionWave } from "./compositions/feb-video-1/09_revolution_wave";
+import { AppDeletion } from "./compositions/feb-video-1/10_app_deletion";
+import { GithubRepoTour } from "./compositions/feb-video-1/11_github_repo";
+import { SingleWorkflow } from "./compositions/feb-video-1/12_single_workflow";
+import { CtaEndCard } from "./compositions/feb-video-1/13_cta_endcard";
 
 // Each <Composition> is an entry in the sidebar!
 
@@ -287,6 +298,116 @@ export const RemotionRoot: React.FC = () => {
         id="WorkforceCounter"
         component={WorkforceCounter}
         durationInFrames={90}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+
+      {/* n8n Mammoth Zoom Animation */}
+      <Composition
+        id="N8nMammoth"
+        component={N8nMammothZoom}
+        durationInFrames={240} // 8 seconds
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+
+      {/* Skills Gap Animation */}
+      <Composition
+        id="SkillsGap"
+        component={SkillsGap}
+        durationInFrames={180} // 6 seconds
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+
+      {/* Telegram Command Center */}
+      <Composition
+        id="TelegramCommandCenter"
+        component={TelegramCommandCenter}
+        durationInFrames={210} // 7 seconds
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+
+      {/* PARA Method Animation */}
+      <Composition
+        id="ParaMethod"
+        component={ParaMethod}
+        durationInFrames={240} // 8 seconds
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+
+      {/* Blacklist System Flow */}
+      <Composition
+        id="BlacklistSystem"
+        component={BlacklistSystem}
+        durationInFrames={180} // 6 seconds
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+
+      {/* MCP Protocol Visualization */}
+      <Composition
+        id="McpProtocol"
+        component={McpProtocol}
+        durationInFrames={150} // 5 seconds
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+
+      {/* Revolution Wave Animation */}
+      <Composition
+        id="RevolutionWave"
+        component={RevolutionWave}
+        durationInFrames={210} // 7 seconds
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+
+      {/* App Deletion Montage */}
+      <Composition
+        id="AppDeletion"
+        component={AppDeletion}
+        durationInFrames={120} // 4 seconds
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+
+      {/* GitHub Repo Tour */}
+      <Composition
+        id="GithubRepoTour"
+        component={GithubRepoTour}
+        durationInFrames={240} // 8 seconds
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+
+      {/* Single Workflow Starting Point */}
+      <Composition
+        id="SingleWorkflow"
+        component={SingleWorkflow}
+        durationInFrames={150} // 5 seconds
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+
+      {/* Call-to-Action End Card */}
+      <Composition
+        id="CtaEndCard"
+        component={CtaEndCard}
+        durationInFrames={300} // 10 seconds
         fps={30}
         width={1920}
         height={1080}
