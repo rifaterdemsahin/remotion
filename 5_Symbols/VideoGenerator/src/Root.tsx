@@ -21,6 +21,7 @@ import { CPUHeadroomExplainer } from "./compositions/cpu-headroom/CPUHeadroomExp
 import { ThumbnailMain } from "./compositions/thumbnail/ThumbnailMain";
 import { AgenticEraMain, agenticEraSchema } from "./compositions/agentic-era/Main";
 import { FerrariHook } from "./compositions/feb-video-1/01_ferrari_hook";
+import { WorkforceCounter } from "./compositions/feb-video-1/02_workforce_counter";
 
 // Each <Composition> is an entry in the sidebar!
 
@@ -276,6 +277,16 @@ export const RemotionRoot: React.FC = () => {
         id="FerrariHook"
         component={FerrariHook}
         durationInFrames={150}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+
+      {/* Workforce Reveal Animation */}
+      <Composition
+        id="WorkforceCounter"
+        component={WorkforceCounter}
+        durationInFrames={90}
         fps={30}
         width={1920}
         height={1080}
