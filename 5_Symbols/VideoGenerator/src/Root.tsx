@@ -34,6 +34,24 @@ import { GithubRepoTour } from "./compositions/feb-video-1/11_github_repo";
 import { SingleWorkflow } from "./compositions/feb-video-1/12_single_workflow";
 import { CtaEndCard } from "./compositions/feb-video-1/13_cta_endcard";
 
+// Delivery Pilot Transformation compositions
+import { GoldenMicIntro } from "./compositions/delivery-pilot/01_golden_mic";
+import { PivotDecision } from "./compositions/delivery-pilot/02_pivot_decision";
+import { ZombieSnails } from "./compositions/delivery-pilot/03_zombie_snails";
+import { StatuesVsMercury } from "./compositions/delivery-pilot/04_statues_vs_mercury";
+import { BreakingChains } from "./compositions/delivery-pilot/05_breaking_chains";
+import { CloneLab } from "./compositions/delivery-pilot/06_clone_lab";
+import { FreeTierTools } from "./compositions/delivery-pilot/07_free_tier_tools";
+import { InternetKillSwitch } from "./compositions/delivery-pilot/08_internet_kill_switch";
+import { LlmFeastTable } from "./compositions/delivery-pilot/09_llm_feast";
+import { ClaudeCard } from "./compositions/delivery-pilot/10_claude_card";
+import { ChatgptCard } from "./compositions/delivery-pilot/11_chatgpt_card";
+import { DeepseekCard } from "./compositions/delivery-pilot/12_deepseek_card";
+import { GeminiCard } from "./compositions/delivery-pilot/13_gemini_card";
+import { N8nBespokeLogic } from "./compositions/delivery-pilot/14_n8n_bespoke";
+import { SuccessMetrics } from "./compositions/delivery-pilot/15_success_metrics";
+import { DroneCityFinale } from "./compositions/delivery-pilot/16_drone_city_finale";
+
 // Each <Composition> is an entry in the sidebar!
 
 export const RemotionRoot: React.FC = () => {
@@ -412,6 +430,24 @@ export const RemotionRoot: React.FC = () => {
         width={1920}
         height={1080}
       />
+
+      {/* ===== Delivery Pilot Transformation ===== */}
+      <Composition id="DP-GoldenMic" component={GoldenMicIntro} durationInFrames={150} fps={30} width={1920} height={1080} />
+      <Composition id="DP-PivotDecision" component={PivotDecision} durationInFrames={150} fps={30} width={1920} height={1080} />
+      <Composition id="DP-ZombieSnails" component={ZombieSnails} durationInFrames={180} fps={30} width={1920} height={1080} />
+      <Composition id="DP-StatuesVsMercury" component={StatuesVsMercury} durationInFrames={180} fps={30} width={1920} height={1080} />
+      <Composition id="DP-BreakingChains" component={BreakingChains} durationInFrames={150} fps={30} width={1920} height={1080} />
+      <Composition id="DP-CloneLab" component={CloneLab} durationInFrames={210} fps={30} width={1920} height={1080} />
+      <Composition id="DP-FreeTierTools" component={FreeTierTools} durationInFrames={180} fps={30} width={1920} height={1080} />
+      <Composition id="DP-InternetKillSwitch" component={InternetKillSwitch} durationInFrames={180} fps={30} width={1920} height={1080} />
+      <Composition id="DP-LlmFeast" component={LlmFeastTable} durationInFrames={180} fps={30} width={1920} height={1080} />
+      <Composition id="DP-ClaudeCard" component={ClaudeCard} durationInFrames={150} fps={30} width={1920} height={1080} />
+      <Composition id="DP-ChatgptCard" component={ChatgptCard} durationInFrames={150} fps={30} width={1920} height={1080} />
+      <Composition id="DP-DeepseekCard" component={DeepseekCard} durationInFrames={150} fps={30} width={1920} height={1080} />
+      <Composition id="DP-GeminiCard" component={GeminiCard} durationInFrames={150} fps={30} width={1920} height={1080} />
+      <Composition id="DP-N8nBespoke" component={N8nBespokeLogic} durationInFrames={180} fps={30} width={1920} height={1080} />
+      <Composition id="DP-SuccessMetrics" component={SuccessMetrics} durationInFrames={180} fps={30} width={1920} height={1080} />
+      <Composition id="DP-DroneCityFinale" component={DroneCityFinale} durationInFrames={210} fps={30} width={1920} height={1080} />
     </>
   );
 };
